@@ -11,7 +11,26 @@ declare namespace jsonata {
   }
 
   interface ExprNode {
-    type: string;
+    type:
+        | "binary"
+        | "unary"
+        | "function"
+        | "partial"
+        | "lambda"
+        | "condition"
+        | "transform"
+        | "block"
+        | "name"
+        | "parent"
+        | "string"
+        | "number"
+        | "value"
+        | "wildcard"
+        | "descendant"
+        | "variable"
+        | "regexp"
+        | "operator"
+        | "error";
     value?: any;
     position?: number;
     arguments?: ExprNode[];
@@ -20,7 +39,7 @@ declare namespace jsonata {
     steps?: ExprNode[];
     expressions?: ExprNode[];
     stages?: ExprNode[];
-    lhs?: ExprNode[];
+    lhs?: ExprNode | ExprNode[];
     rhs?: ExprNode;
   }
 
@@ -31,8 +50,8 @@ declare namespace jsonata {
   }
 
   interface Environment {
-    bind(name: string, value: any): void;
-    lookup(name: string): any;
+    bind(name: string | symbol, value: any): void;
+    lookup(name: string | symbol): any;
     readonly timestamp: Date;
     readonly async: boolean;
   }
